@@ -13,6 +13,7 @@ namespace produit.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
           : base(options)
         {
+            Database.EnsureCreated();
         }
         public DbSet<Produit> produits { get; set; }
         public DbSet<Catégorie> catégories  { get; set; }

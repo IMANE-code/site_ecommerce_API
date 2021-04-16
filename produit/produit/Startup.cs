@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using produit.Data;
+using produit.Repositorie;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,12 @@ namespace produit
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite("Data source=produit.db"));
+
+           
+
+            services.AddScoped<IProduitRepository, ProduitRepository>();
+            //services.AddScoped<ICatégorieRepository, CatégorieRepository>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(
                      Configuration.GetConnectionString("DefaultConnection")));

@@ -12,7 +12,7 @@ namespace produit.Models
     {
         [Key]
         public int Id { get; set; }
-        public int NameProduit { get; set; }
+        public string NameProduit { get; set; }
         public float PrixProduit { get; set; }
         
     }
