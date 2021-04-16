@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace produit.Repositorie
 {
-    public class CommandeRepository
+    public class CommandeRepository : ICommandeRepository
     {
         private readonly ApplicationDbContext _context;
         public CommandeRepository(ApplicationDbContext context)

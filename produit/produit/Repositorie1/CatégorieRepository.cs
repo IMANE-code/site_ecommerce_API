@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace produit.Repositorie
 {
-    public class CatégorieRepository
+    public class CatégorieRepository: ICatégorieRepository
     {
         private readonly ApplicationDbContext _context;
         public CatégorieRepository(ApplicationDbContext context)

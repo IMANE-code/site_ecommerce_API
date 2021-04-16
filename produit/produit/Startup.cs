@@ -31,10 +31,10 @@ namespace produit
         {
             //services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite("Data source=produit.db"));
 
-           
 
+            services.AddScoped<ICatégorieRepository, CatégorieRepository>();
             services.AddScoped<IProduitRepository, ProduitRepository>();
-            //services.AddScoped<ICatégorieRepository, CatégorieRepository>();
+            services.AddScoped<IPanierRepository, PanierRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(
