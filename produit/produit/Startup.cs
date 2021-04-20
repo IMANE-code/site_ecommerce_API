@@ -35,6 +35,11 @@ namespace produit
             services.AddScoped<ICatégorieRepository, CatégorieRepository>();
             services.AddScoped<IProduitRepository, ProduitRepository>();
             services.AddScoped<IPanierRepository, PanierRepository>();
+            services.AddScoped<ICommandeRepository, CommandeRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+
+
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(

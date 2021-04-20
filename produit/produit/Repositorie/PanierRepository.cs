@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace produit.Repositorie
 {
-    public class PanierRepository
+    public class PanierRepository : IPanierRepository
     {
         private readonly ApplicationDbContext _context;
         public PanierRepository(ApplicationDbContext context)

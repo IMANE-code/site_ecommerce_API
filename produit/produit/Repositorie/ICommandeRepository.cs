@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace produit.Repositorie
 {
-    interface ICommandeRepository
+    public interface ICommandeRepository
     {
         Task<IEnumerable<Commande>> Get();
         Task<Commande> Get(int id);

@@ -13,8 +13,6 @@ namespace produit.Models
         [Key]
         public int Id { get; set; }
         public DateTime DateCreate { get; set; }
-        [ForeignKey("IdClient")]
-        public Client client { get; set; }
-        public string IdClient { get; set; }
+      
     }
 }

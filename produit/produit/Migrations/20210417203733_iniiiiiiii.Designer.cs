@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using produit.Data;
 
 namespace produit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210417203733_iniiiiiiii")]
+    partial class iniiiiiiii
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,21 +235,6 @@ namespace produit.Migrations
                     b.ToTable("catégories");
                 });
 
-            modelBuilder.Entity("produit.Models.Commande", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("commandes");
-                });
-
             modelBuilder.Entity("produit.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -275,9 +262,15 @@ namespace produit.Migrations
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("paniers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Panier");
                 });
 
             modelBuilder.Entity("produit.Models.Produit", b =>
@@ -286,9 +279,6 @@ namespace produit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<int>("CatId")
-                        .HasColumnType("int");
 
                     b.Property<string>("NameProduit")
                         .HasColumnType("nvarchar(max)");
@@ -299,6 +289,16 @@ namespace produit.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("produits");
+                });
+
+            modelBuilder.Entity("produit.Models.Commande", b =>
+                {
+                    b.HasBaseType("produit.Models.Panier");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Commande");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

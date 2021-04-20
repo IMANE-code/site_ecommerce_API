@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace produit.Repositorie
 {
-    interface IPanierRepository
+    public interface IImageRepository
     {
-        Task<IEnumerable<Panier>> Get();
-        Task<Panier> Get(int id);
-        Task<Panier> Create(Panier panier);
-        Task Update(Panier panier);
+        Task<IEnumerable<Image>> Get();
+        Task<Image> Get(int id);
+        Task<Image> Create(Image image);
+        Task Update(Image image);
         Task Delete(int id);
     }
 }

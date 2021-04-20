@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace produit.Models
 {
-    public class Commande:Panier
+    public class Commande
     {
         [Key]
-        public int Id { get; set;}
+        public  int Id { get; set;}
         public string Status { get; set; }
     }
 }

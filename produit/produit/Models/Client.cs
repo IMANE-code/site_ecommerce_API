@@ -10,7 +10,7 @@ namespace produit.Models
     public class Client:IdentityUser
     {
         [Key]
-        public string Id { get; set; }
+        public override string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Adresse { get; set; }
