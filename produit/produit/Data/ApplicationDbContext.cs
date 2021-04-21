@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using produit.ModelAuth;
 using produit.Models;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,6 @@ namespace produit.Data
         public DbSet<Panier> paniers { get; set; }
         public DbSet<Image> images { get; set; }
 
+        public DbSet<User> User { get; set; }
     }
 }

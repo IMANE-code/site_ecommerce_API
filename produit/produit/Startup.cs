@@ -1,18 +1,25 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using produit.Data;
+using produit.Helpers;
+using produit.ModelAuth;
 using produit.Repositorie;
+using produit.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace produit
@@ -32,6 +39,18 @@ namespace produit
             //services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite("Data source=produit.db"));
 
 
+            services.AddIdentity<User, IdentityRole>(conf =>
+            {
+                conf.Password.RequiredLength = 4;
+                conf.Password.RequireUppercase = false;
+                conf.Password.RequireNonAlphanumeric = false;
+                conf.Password.RequiredUniqueChars = 0;
+                conf.Password.RequireDigit = false;
+                conf.SignIn.RequireConfirmedAccount = false;
+                conf.Password.RequireLowercase = false;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+
             services.AddScoped<ICatégorieRepository, CatégorieRepository>();
             services.AddScoped<IProduitRepository, ProduitRepository>();
             services.AddScoped<IPanierRepository, PanierRepository>();
@@ -44,6 +63,33 @@ namespace produit
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(
                      Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(c =>
+                {
+                    c.RequireHttpsMetadata = false;
+                    c.SaveToken = false;
+                    c.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = Configuration["JWT:Issuer"],
+                        ValidAudience = Configuration["JWT:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Key"]))
+                    };
+                });
+
+            services.Configure<JWT>(Configuration.GetSection("JWT"));
 
 
             services.AddControllers();
