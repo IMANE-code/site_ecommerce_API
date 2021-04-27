@@ -14,8 +14,8 @@ namespace produit.Models
         public int Id { get; set; }
         public string NameProduit { get; set; }
         public float PrixProduit { get; set; }
-        [ForeignKey("CatId")]
-        public int CatId { get; set; }
-
+        //[ForeignKey("CatId")]
+        //public int CatId { get; set; }
+        //public Catégorie catégorie { get; set; }
     }
 }

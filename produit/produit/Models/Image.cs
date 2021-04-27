@@ -13,9 +13,9 @@ namespace produit.Models
         [NotMapped]
         public IFormFile FileProduit { get; set; }
 
-        [ForeignKey("ProduitId")]
-        public int ProduitId { get; set; }
-        public Produit Produit { get; set; }
+        //[ForeignKey("ProduitId")]
+        //public int ProduitId { get; set; }
+        //public Produit Produit { get; set; }
 
     }
 }

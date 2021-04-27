@@ -164,3 +164,4 @@ C:\Users\Youcode\Desktop\site_ecommerce_API\produit\produit\obj\Debug\net5.0\pro
 C:\Users\Youcode\Desktop\site_ecommerce_API\produit\produit\obj\Debug\net5.0\produit.genruntimeconfig.cache
 C:\Users\Youcode\Desktop\site_ecommerce_API\produit\produit\bin\Debug\net5.0\jose-jwt.dll
 C:\Users\Youcode\Desktop\site_ecommerce_API\produit\produit\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Youcode\Desktop\site_ecommerce_API\produit\produit\obj\Debug\net5.0\produit.csprojAssemblyReference.cache

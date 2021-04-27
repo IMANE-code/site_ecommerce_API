@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using produit.Models;
 using produit.Repositorie;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace produit.Controller
@@ -13,54 +17,41 @@ namespace produit.Controller
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        private readonly IImageRepository _imageRepository;
-       
-        public ImagesController(IImageRepository imageRepository)
+        public ImagesController()
         {
-            _imageRepository = imageRepository;
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<Image>> GetImages()
-        {
-            return await _imageRepository.Get();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Image>> GetImages(int id)
-        {
-            return await _imageRepository.Get(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Image>> PostImages([FromBody] Image image)
+        public IActionResult Upload()
         {
-            var newImage = await _imageRepository.Create(image);
-            return CreatedAtAction(nameof(newImage), new { id = newImage.Id }, newImage);
-        }
-
-        [HttpPut]
-        public async Task<ActionResult<Image>> PutImages(int id, [FromBody] Image image)
-        {
-            if (id != image.Id)
+            try
             {
-                return BadRequest();
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("StaticFiles", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    return Ok(dbPath);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            await _imageRepository.Update(image);
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Image>> Delete(int id)
-        {
-            var ImageToDelete = await _imageRepository.Get(id);
-            if (ImageToDelete == null)
-                return NotFound();
-
-            await _imageRepository.Delete(ImageToDelete.Id);
-            return NoContent();
-
-        }
-
     }
 }

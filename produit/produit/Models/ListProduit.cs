@@ -10,9 +10,9 @@ namespace produit.Models
     {
         public int Id { get; set; }
 
-        [ForeignKey("IdProduit,IdPanier")]
-        public int IdProduit { get; set; }
-        public int IdPanier { get; set; }
+        //[ForeignKey("IdProduit,IdPanier")]
+        //public int IdProduit { get; set; }
+        //public int IdPanier { get; set; }
 
     }
 }
